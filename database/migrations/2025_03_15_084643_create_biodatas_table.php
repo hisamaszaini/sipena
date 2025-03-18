@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('nama', 50);
             $table->string('email', 60)->nullable();
             $table->string('no_telp', 15)->unique();
-            $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan']);
+            $table->enum('jenis_kelamin', ['laki-laki', 'perempuan']);
             $table->string('agama', 10)->nullable();
             $table->string('kecamatan_kode', 7);
             $table->foreign('kecamatan_kode')->references('kode')->on('kecamatan')->cascadeOnDelete();
