@@ -13,7 +13,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('provinsi', function (Blueprint $table) {
-            $table->string('kode', 2)->primary();
+            $table->id();
+            $table->string('kode', 2)->unique();
             $table->string('nama', 60);
         });
 

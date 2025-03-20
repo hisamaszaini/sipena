@@ -19,8 +19,8 @@ class Biodata extends Model
         'no_telp',
         'jenis_kelamin',
         'agama',
-        'kecamatan_kode',
-        'templat_lahir',
+        'kecamatan_id',
+        'tempat_lahir',
         'tanggal_lahir',
         'alamat_tinggal',
         'alamat_asal'

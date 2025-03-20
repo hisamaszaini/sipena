@@ -18,10 +18,8 @@ return new class extends Migration
             $table->string('nomor_sk', 30)->unique();
             $table->string('nama_pimpinan', 50);
             $table->string('no_telp', 15);
-            $table->string('provinsi_kode', 2);
-            $table->foreign('provinsi_kode')->references('kode')->on('provinsi')->cascadeOnDelete();
-            $table->string('kabupaten_kode', 4);
-            $table->foreign('kabupaten_kode')->references('kode')->on('kabupaten')->cascadeOnDelete();
+            $table->foreignId('provinsi_id')->references('id')->on('provinsi')->cascadeOnDelete();
+            $table->foreignId('kabupaten_id')->references('id')->on('kabupaten')->cascadeOnDelete();
             $table->string('alamat', 60);
             $table->timestamps();
         });
@@ -31,8 +29,8 @@ return new class extends Migration
             'nomor_sk' => 'nomornya',
             'nama_pimpinan' => 'pimpinan',
             'no_telp' => '08372617213',
-            'provinsi_kode' => '35',
-            'kabupaten_kode' => '3502',
+            'provinsi_id' => 1,
+            'kabupaten_id' => 1,
             'alamat' => 'Jalan Ponorogo Raya',
         ]);
     }

@@ -1,0 +1,118 @@
+    /* Styling untuk form input dan select */
+    .dataTables_wrapper .dataTables_filter input {
+        border: 1px solid #4a5568!important;
+        background-color: #374151!important;
+        color: white;
+        padding: 6px 10px!important;
+        border-radius: 4px!important;
+        margin-left: 8px;
+        outline: none;
+    }
+
+    .dataTables_wrapper .dataTables_filter input:focus {
+        border-color: #3b82f6!important;
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3)!important;
+    }
+
+    .dataTables_wrapper .dataTables_length select {
+        border: 1px solid #4a5568 !important;
+        background-color: #374151 !important;
+        color: white;
+        padding: 4px 8px 4px 8px !important;
+        border-radius: 4px !important;
+        outline: none;
+        margin: 0 4px;
+    }
+
+    .dataTables_wrapper .dataTables_length select:focus {
+        border-color: #3b82f6;
+    }
+
+    /* Option styling */
+    .dataTables_wrapper .dataTables_length select option {
+        background-color: #1f2937;
+        color: white;
+        padding: 8px;
+    }
+
+    /* Pagination styling */
+    .dataTables_wrapper .dataTables_paginate .paginate_button {
+        color: white !important;
+        border: 1px solid #4a5568 !important;
+        background-color: #374151 !important;
+        border-radius: 4px;
+        margin: 0 3px;
+    }
+
+    .dataTables_wrapper .dataTables_paginate .paginate_button.current,
+    .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+        background-color: #3b82f6 !important;
+        border-color: #3b82f6 !important;
+        color: white !important;
+    }
+
+    /* Modal styling */
+    .fixed {
+        position: fixed;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    /* Responsive Table */
+    @media (max-width: 768px) {
+        #dataTable thead {
+            display: none;
+        }
+
+        #dataTable tbody tr {
+            display: block;
+            border: 1px solid #444;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: rgb(40 48 61 / 92%);
+        }
+
+        #dataTable tbody tr td {
+            display: flex;
+            justify-content: space-between;
+            /* align-items: center; */
+            padding: 8px 10px;
+            border-bottom: 1px solid #555;
+        }
+
+        #dataTable tbody tr td:last-child {
+            border-bottom: none;
+        }
+
+        #dataTable tbody tr td::before {
+            content: attr(data-label);
+            font-weight: bold;
+            color: #fff;
+            flex: 1;
+            text-align: left;
+        }
+
+        td[data-label="Email"], td[data-label="Alamat"]{
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            text-align: left;
+        }
+
+        /* Tambahkan spacing untuk buttons di mobile */
+        #dataTable .action-buttons {
+            margin-top: 4px;
+        }
+
+        /* Perbaiki margin dan padding untuk filter dan length di mobile */
+        .dataTables_wrapper .dataTables_filter,
+        .dataTables_wrapper .dataTables_length {
+            text-align: left;
+            margin-bottom: 12px;
+            width: 100%;
+        }
+    }

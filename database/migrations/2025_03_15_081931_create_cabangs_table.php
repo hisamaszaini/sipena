@@ -17,13 +17,7 @@ return new class extends Migration
             $table->string('nomor_sk', 30)->unique();
             $table->string('nama_pimpinan', 50);
             $table->string('no_telp', 15);
-            // $table->string('provinsi_kode', 2);
-            // $table->foreign('provinsi_kode')->constrained('provinsi', 'kode')->onDelete('set null');
-            // $table->string('kabupaten_kode', 4);
-            // $table->foreign('kabupaten_kode')->constrained('kabupaten', 'kode')->onDelete('set null');
-            // $table->string('kabupaten_kode', 7);
-            $table->string('kecamatan_kode', 7);
-            $table->foreign('kecamatan_kode')->references('kode')->on('kecamatan')->cascadeOnDelete();
+            $table->foreignId('kecamatan_id')->references('id')->on('kecamatan')->cascadeOnDelete();
             $table->string('alamat', 60);
             $table->foreignId('daerah_id')->references('id')->on('daerah')->cascadeOnDelete();
             $table->timestamps();

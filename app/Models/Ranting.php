@@ -13,7 +13,7 @@ class Ranting extends Model
         'nomor_sk',
         'nama_pimpinan',
         'no_telp',
-        'desa_kode',
+        'desa_id',
         'alamat',
         'cabang_id'
     ];

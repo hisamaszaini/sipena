@@ -16,7 +16,7 @@ class Cabang extends Model
         'nomor_sk',
         'nama_pimpinan',
         'no_telp',
-        'kecamatan_kode',
+        'kecamatan_id',
         'alamat',
         'daerah_id',
     ];
@@ -26,7 +26,7 @@ class Cabang extends Model
      */
     public function kecamatan()
     {
-        return $this->belongsTo(Kecamatan::class, 'kecamatan_kode', 'kode');
+        return $this->belongsTo(Kecamatan::class);
     }
 
     /**

@@ -13,15 +13,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('desa', function (Blueprint $table) {
-            $table->string('kode', 10)->primary();
-            $table->string('kecamatan_kode', 7);
-            $table->foreign('kecamatan_kode')->references('kode')->on('kecamatan')->cascadeOnDelete();
+            $table->id();
+            $table->string('kode', 10)->unique();
+            $table->foreignId('kecamatan_id')->references('id')->on('kecamatan')->cascadeOnDelete();
             $table->string('nama', 50);
         });
 
         DB::table('desa')->insert([
             'kode' => 3502070009,
-            'kecamatan_kode' => 3502070,
+            'kecamatan_id' => 1,
             'nama' => 'SIDOHARJO'
         ]);
     }

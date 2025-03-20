@@ -16,8 +16,8 @@ class Daerah extends Model
         'nomor_sk',
         'nama_pimpinan',
         'no_telp',
-        'provinsi_kode',
-        'kabupaten_kode',
+        'provinsi_id',
+        'kabupaten_id',
         'alamat',
     ];
 

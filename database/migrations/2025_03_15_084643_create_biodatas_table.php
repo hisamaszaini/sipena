@@ -20,8 +20,7 @@ return new class extends Migration
             $table->string('no_telp', 15)->unique();
             $table->enum('jenis_kelamin', ['laki-laki', 'perempuan']);
             $table->string('agama', 10)->nullable();
-            $table->string('kecamatan_kode', 7);
-            $table->foreign('kecamatan_kode')->references('kode')->on('kecamatan')->cascadeOnDelete();
+            $table->foreignId('kecamatan_id')->references('id')->on('kecamatan')->cascadeOnDelete();
             $table->string('tempat_lahir', 30)->nullable();
             $table->date('tanggal_lahir')->nullable();
             $table->string('alamat_tinggal', 60)->nullable();

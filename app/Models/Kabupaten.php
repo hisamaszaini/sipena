@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Kabupaten extends Model
 {
     protected $table = 'kabupaten';
-
+    public $timestamps = false; 
     protected $fillable = [
         'kode',
-        'provinsi_kode',
+        'provinsi_id',
         'nama'
     ];
 
