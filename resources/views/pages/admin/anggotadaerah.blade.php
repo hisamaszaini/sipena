@@ -82,6 +82,7 @@
             <div class="md:col-span-1">
                 <label for="kecamatan_id" class="block text-white mb-1">Kecamatan</label>
                 <select id="kecamatan_id" name="kecamatan_id" required class="w-full px-3 py-2 bg-gray-700 text-white rounded-md border border-gray-600 focus:border-blue-500 focus:outline-none">
+                    <option value="">Pilih Kecamatan</option>
                     @foreach($kecamatan as $kec)
                         <option value="{{ $kec->id }}">{{ $kec->nama }}</option>
                     @endforeach
@@ -94,6 +95,14 @@
             <div class="md:col-span-1">
                 <label for="tanggal_lahir" class="block text-white mb-1">Tanggal Lahir</label>
                 <input type="date" id="tanggal_lahir" name="tanggal_lahir" class="w-full px-3 py-2 bg-gray-700 text-white rounded-md border border-gray-600 focus:border-blue-500 focus:outline-none">
+            </div>
+            <div class="md:col-span-1">
+                <label for="pendidikan_sekarang" class="block text-white mb-1">Pendidikan Sekarang</label>
+                <input type="text" id="pendidikan_sekarang" name="pendidikan_sekarang" class="w-full px-3 py-2 bg-gray-700 text-white rounded-md border border-gray-600 focus:border-blue-500 focus:outline-none">
+            </div>
+            <div class="md:col-span-1">
+                <label for="pendidikan_terakhir" class="block text-white mb-1">Pendidikan Terakhir</label>
+                <input type="text" id="pendidikan_terakhir" name="pendidikan_terakhir" class="w-full px-3 py-2 bg-gray-700 text-white rounded-md border border-gray-600 focus:border-blue-500 focus:outline-none">
             </div>
             <div class="md:col-span-1">
                 <label for="alamat_tinggal" class="block text-white mb-1">Alamat Tinggal</label>
@@ -389,6 +398,8 @@ $(document).ready(function () {
             $('#kecamatan_id').val(response.biodata.kecamatan_id);
             $('#tempat_lahir').val(response.biodata.tempat_lahir);
             $('#tanggal_lahir').val(response.biodata.tanggal_lahir);
+            $('#pendidikan_terakhir').val(response.biodata.pendidikan_terakhir);
+            $('#pendidikan_sekarang').val(response.biodata.pendidikan_sekarang);
             $('#alamat_tinggal').val(response.biodata.alamat_tinggal);
             $('#alamat_asal').val(response.biodata.alamat_asal);
             // Isi data anggota daerah

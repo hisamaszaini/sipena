@@ -23,8 +23,11 @@ return new class extends Migration
             $table->foreignId('kecamatan_id')->references('id')->on('kecamatan')->cascadeOnDelete();
             $table->string('tempat_lahir', 30)->nullable();
             $table->date('tanggal_lahir')->nullable();
+            $table->string('pendidikan_terakhir', 30)->nullable();
+            $table->string('pendidikan_sekarang', 30)->nullable();
             $table->string('alamat_tinggal', 60)->nullable();
             $table->string('alamat_asal', 60)->nullable();
+            $table->foreignId('created_by')->references('id')->on('users')->cascadeOnDelete();
             $table->timestamps();
         });
     }

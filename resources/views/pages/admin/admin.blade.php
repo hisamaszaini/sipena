@@ -364,7 +364,7 @@
             var id = $(this).data('id');
 
             $.get("{{ route('admin.edit', ':id') }}".replace(':id', id), function (response) {
-                $('#view-nama').text(response.nama);
+                $('#view-nama').text(response.name);
                 $('#view-username').text(response.username);
                 $('#view-email').text(response.email);
                 $('#view-no_telp').text(response.no_telp);

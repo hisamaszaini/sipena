@@ -42,7 +42,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware(['auth', 'check.role:admin'])->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
     Route::post('/store', [AdminController::class, 'store'])->name('admin.store');
     Route::get('/edit/{id}', [AdminController::class, 'edit'])->name('admin.edit');
@@ -51,7 +51,7 @@ Route::prefix('admin')->group(function () {
     Route::get('/export', [AdminController::class, 'export'])->name('admin.export');
 });
 
-Route::prefix('operator')->group(function () {
+Route::prefix('operator')->middleware(['auth', 'check.role:admin'])->group(function () {
     Route::get('/', [OperatorController::class, 'index'])->name('operator.index');
     Route::post('/store', [OperatorController::class, 'store'])->name('operator.store');
     Route::get('/edit/{id}', [OperatorController::class, 'edit'])->name('operator.edit');
@@ -60,7 +60,7 @@ Route::prefix('operator')->group(function () {
     Route::get('/export', [OperatorController::class, 'export'])->name('operator.export');
 });
 
-Route::prefix('kecamatan')->group(function () {
+Route::prefix('kecamatan')->middleware(['auth'])->group(function () {
     Route::get('/', [KecamatanController::class, 'index'])->name('kecamatan.index');
     Route::post('/store', [KecamatanController::class, 'store'])->name('kecamatan.store');
     Route::get('/edit/{id}', [KecamatanController::class, 'edit'])->name('kecamatan.edit');
@@ -69,7 +69,7 @@ Route::prefix('kecamatan')->group(function () {
     Route::get('/export', [KecamatanController::class, 'export'])->name('kecamatan.export');
 });
 
-Route::prefix('desa')->group(function () {
+Route::prefix('desa')->middleware(['auth'])->group(function () {
     Route::get('/', [DesaController::class, 'index'])->name('desa.index');
     Route::post('/store', [DesaController::class, 'store'])->name('desa.store');
     Route::get('/edit/{id}', [DesaController::class, 'edit'])->name('desa.edit');
@@ -78,13 +78,13 @@ Route::prefix('desa')->group(function () {
     Route::get('/export', [DesaController::class, 'export'])->name('desa.export');
 });
 
-Route::prefix('daerah')->group(function () {
+Route::prefix('daerah')->middleware(['auth', 'check.role:admin'])->group(function () {
     Route::get('/', [DaerahController::class, 'index'])->name('daerah.index');
     Route::get('/edit', [DaerahController::class, 'edit'])->name('daerah.edit');
     Route::put('/update', [DaerahController::class, 'update'])->name('daerah.update');
 });
 
-Route::prefix('cabang')->group(function () {
+Route::prefix('cabang')->middleware(['auth'])->group(function () {
     Route::get('/', [CabangController::class, 'index'])->name('cabang.index');
     Route::post('/store', [CabangController::class, 'store'])->name('cabang.store');
     Route::get('/edit/{id}', [CabangController::class, 'edit'])->name('cabang.edit');
@@ -93,7 +93,7 @@ Route::prefix('cabang')->group(function () {
     Route::get('/export', [CabangController::class, 'export'])->name('cabang.export');
 });
 
-Route::prefix('ranting')->group(function () {
+Route::prefix('ranting')->middleware(['auth'])->group(function () {
     Route::get('/', [RantingController::class, 'index'])->name('ranting.index');
     Route::post('/store', [RantingController::class, 'store'])->name('ranting.store');
     Route::get('/edit/{id}', [RantingController::class, 'edit'])->name('ranting.edit');
@@ -102,7 +102,7 @@ Route::prefix('ranting')->group(function () {
     Route::get('/export', [RantingController::class, 'export'])->name('ranting.export');
 });
 
-Route::prefix('anggotadaerah')->group(function () {
+Route::prefix('anggotadaerah')->middleware(['auth', 'check.role:admin'])->group(function () {
     Route::get('/', [AnggotaDaerahController::class, 'index'])->name('anggotadaerah.index');
     Route::post('/store', [AnggotaDaerahController::class, 'store'])->name('anggotadaerah.store');
     Route::get('/edit/{id}', [AnggotaDaerahController::class, 'edit'])->name('anggotadaerah.edit');
@@ -111,7 +111,7 @@ Route::prefix('anggotadaerah')->group(function () {
     Route::get('/export', [AnggotaDaerahController::class, 'export'])->name('anggotadaerah.export');
 });
 
-Route::prefix('anggotacabang')->group(function () {
+Route::prefix('anggotacabang')->middleware(['auth'])->group(function () {
     Route::get('/', [AnggotaCabangController::class, 'index'])->name('anggotacabang.index');
     Route::post('/store', [AnggotaCabangController::class, 'store'])->name('anggotacabang.store');
     Route::get('/edit/{id}', [AnggotaCabangController::class, 'edit'])->name('anggotacabang.edit');
@@ -120,7 +120,7 @@ Route::prefix('anggotacabang')->group(function () {
     Route::get('/export', [AnggotaCabangController::class, 'export'])->name('anggotacabang.export');
 });
 
-Route::prefix('anggotaranting')->group(function () {
+Route::prefix('anggotaranting')->middleware(['auth'])->group(function () {
     Route::get('/', [AnggotaRantingController::class, 'index'])->name('anggotaranting.index');
     Route::post('/store', [AnggotaRantingController::class, 'store'])->name('anggotaranting.store');
     Route::get('/edit/{id}', [AnggotaRantingController::class, 'edit'])->name('anggotaranting.edit');

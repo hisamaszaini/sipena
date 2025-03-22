@@ -22,8 +22,11 @@ class Biodata extends Model
         'kecamatan_id',
         'tempat_lahir',
         'tanggal_lahir',
+        'pendidikan_terakhir',
+        'pendidikan_sekarang',
         'alamat_tinggal',
-        'alamat_asal'
+        'alamat_asal',
+        'created_by',
     ];
 
     //Relasi

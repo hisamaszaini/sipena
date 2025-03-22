@@ -31,6 +31,7 @@ class AnggotaRantingExport implements FromCollection, WithMapping, WithHeadings
             $data->biodata->jenis_kelamin,
             $data->biodata->tempat_lahir,
             $data->biodata->tanggal_lahir,
+            $data->biodata->pendidikan_terakhir,
             $data->biodata->alamat_tinggal,
             $data->status,
         ];
@@ -47,6 +48,7 @@ class AnggotaRantingExport implements FromCollection, WithMapping, WithHeadings
             'Jenis Kelamin', 
             'Tempat Lahir', 
             'Tanggal Lahir', 
+            'Pendidikan Terakhir',
             'Alamat Tinggal', 
             'Status'
         ];

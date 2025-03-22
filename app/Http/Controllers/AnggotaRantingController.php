@@ -71,6 +71,8 @@ class AnggotaRantingController extends Controller
             'kecamatan_id'   => 'required|integer|exists:kecamatan,id',
             'tempat_lahir'   => 'nullable|string|max:30',
             'tanggal_lahir'  => 'nullable|date',
+            'pendidikan_terakhir'  => 'nullable|string|max:30',
+            'pendidikan_sekarang'  => 'nullable|string|max:30',
             'alamat_tinggal' => 'nullable|string|max:60',
             'alamat_asal'    => 'nullable|string|max:60',
 
@@ -93,6 +95,8 @@ class AnggotaRantingController extends Controller
                 'kecamatan_id',
                 'tempat_lahir',
                 'tanggal_lahir',
+                'pendidikan_terakhir',
+                'pendidikan_sekarang',
                 'alamat_tinggal',
                 'alamat_asal'
             ]);
@@ -148,6 +152,8 @@ class AnggotaRantingController extends Controller
             'kecamatan_id'  => 'required|integer|exists:kecamatan,id',
             'tempat_lahir'  => 'nullable|string|max:30',
             'tanggal_lahir' => 'nullable|date',
+            'pendidikan_terakhir'  => 'nullable|string|max:30',
+            'pendidikan_sekarang'  => 'nullable|string|max:30',
             'alamat_tinggal' => 'nullable|string|max:60',
             'alamat_asal'   => 'nullable|string|max:60',
 
@@ -171,8 +177,10 @@ class AnggotaRantingController extends Controller
                 'kecamatan_id',
                 'tempat_lahir',
                 'tanggal_lahir',
+                'pendidikan_terakhir',
+                'pendidikan_sekarang',
                 'alamat_tinggal',
-                'alamat_asal'
+                'alamat_asal',
             ]);
             $anggotaRanting->biodata()->update($biodataData);
 

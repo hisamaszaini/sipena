@@ -5,7 +5,7 @@
     <div class="mb-8">
         <h1 class="text-3xl font-bold text-white">{{ ucwords(Auth::user()->role) }} / {{ $title }}</h1>
     </div>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {{-- Form Update Profil --}}
         <div class="bg-gray-800 shadow-lg rounded-lg p-6">
             <h2 class="text-xl font-semibold text-white mb-4">Informasi Profil</h2>

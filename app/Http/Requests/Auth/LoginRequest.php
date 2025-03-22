@@ -37,18 +37,37 @@ class LoginRequest extends FormRequest
      *
      * @throws \Illuminate\Validation\ValidationException
      */
+
     public function authenticate(): void
     {
         $this->ensureIsNotRateLimited();
 
         $loginField = filter_var($this->input('login'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-        if (! Auth::attempt([$loginField => $this->input('login'), 'password' => $this->input('password')], $this->boolean('remember'))) {
+
+        // Gunakan Auth::once() bukan Auth::attempt() agar tidak langsung login
+        if (! Auth::once([
+            $loginField => $this->input('login'),
+            'password' => $this->input('password')
+        ])) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
                 'login' => trans('auth.failed'),
             ]);
         }
+
+        // Dapatkan user yang terakhir diperiksa
+        $user = Auth::getLastAttempted();
+
+        // Cek status user
+        if ($user && $user->status === 'nonaktif') {
+            RateLimiter::hit($this->throttleKey());
+
+            throw ValidationException::withMessages([
+                'login' => 'Akun Anda telah dinonaktifkan. Silakan hubungi administrator.',
+            ]);
+        }
+
 
         // if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
         //     RateLimiter::hit($this->throttleKey());
@@ -58,6 +77,8 @@ class LoginRequest extends FormRequest
         //     ]);
         // }
 
+        // Login hanya jika user aktif
+        Auth::login($user, $this->boolean('remember'));
         RateLimiter::clear($this->throttleKey());
     }
 
@@ -89,6 +110,6 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->string('login')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->string('login')) . '|' . $this->ip());
     }
 }

@@ -18,6 +18,8 @@ $(document).ready(function() {
                         $('#agama').val(response.data.agama);
                         $('#kecamatan_id').val(response.data.kecamatan_id);
                         $('#tempat_lahir').val(response.data.tempat_lahir);
+                        $('#pendidikan_terakhir').val(response.data.pendidikan_terakhir);
+                        $('#pendidikan_sekarang').val(response.data.pendidikan_sekarang);
                         $('#tanggal_lahir').val(response.data.tanggal_lahir);
                         $('#alamat_tinggal').val(response.data.alamat_tinggal);
                         $('#alamat_asal').val(response.data.alamat_asal);
