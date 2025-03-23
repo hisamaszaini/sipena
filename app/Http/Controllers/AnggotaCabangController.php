@@ -50,6 +50,7 @@ class AnggotaCabangController extends Controller
 
     public function store(Request $request)
     {
+        $user = Auth::user();
         $biodataExists = Biodata::where('nik', $request->nik)->exists();
 
         $nikRules = $biodataExists ? 'required|string|max:18' : 'required|string|max:18|unique:biodata,nik';
@@ -96,6 +97,10 @@ class AnggotaCabangController extends Controller
                 'alamat_tinggal',
                 'alamat_asal'
             ]);
+
+            if ($user->role === 'operator') {
+                $biodataData['created_by'] = $user->id();
+            }
 
             $biodata = Biodata::firstOrCreate(['nik' => $biodataData['nik']], $biodataData);
 

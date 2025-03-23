@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('pendidikan_sekarang', 30)->nullable();
             $table->string('alamat_tinggal', 60)->nullable();
             $table->string('alamat_asal', 60)->nullable();
-            $table->foreignId('created_by')->references('id')->on('users')->cascadeOnDelete();
+            $table->unsignedBigInteger('created_by')->nullable();
             $table->timestamps();
         });
     }
