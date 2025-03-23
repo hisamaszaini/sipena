@@ -8,11 +8,13 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\DesaExport;
+use Illuminate\Support\Facades\Auth;
 
 class DesaController extends Controller
 {
     public function index(Request $request)
     {
+        $user = Auth::user();
         $kecamatan = Kecamatan::all();
 
         if ($request->ajax()) {
@@ -30,7 +32,7 @@ class DesaController extends Controller
             'kecamatan' => $kecamatan,
         ];
 
-        return view('pages.admin.desa', $data);
+        return view($user == "admin" ? 'pages.admin.desa' : 'pages.operator.desa', $data);
     }
 
     public function store(Request $request)

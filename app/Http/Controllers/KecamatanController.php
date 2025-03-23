@@ -8,11 +8,13 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\KecamatanExport;
+use Illuminate\Support\Facades\Auth;
 
 class KecamatanController extends Controller
 {
     public function index(Request $request)
     {
+        $user = Auth::user();
         $kabupaten = Kabupaten::all();
 
         if ($request->ajax()) {
@@ -30,7 +32,7 @@ class KecamatanController extends Controller
             'kabupaten' => $kabupaten,
         ];
 
-        return view('pages.admin.kecamatan', $data);
+        return view($user == "admin" ? 'pages.admin.kecamatan' : 'pages.operator.kecamatan', $data);
     }
 
     public function store(Request $request)
