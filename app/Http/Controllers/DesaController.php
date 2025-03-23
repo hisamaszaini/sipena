@@ -36,7 +36,7 @@ class DesaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'kode' => 'required|string|max:7|unique:desa,kode',
+            'kode' => 'required|string|max:10|unique:desa,kode',
             'kecamatan_id' => 'required|exists:kecamatan,id',
             'nama' => 'required|string|max:50',
         ]);
@@ -55,7 +55,7 @@ class DesaController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'kode' => 'required|string|max:7|unique:desa,kode,' . $id,
+            'kode' => 'required|string|max:10|unique:desa,kode,' . $id,
             'kecamatan_id' => 'required|exists:kecamatan,id',
             'nama' => 'required|string|max:50',
         ]);
