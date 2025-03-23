@@ -41,13 +41,13 @@ class AnggotaDaerahController extends Controller
     {
         $biodataExists = Biodata::where('nik', $request->nik)->exists();
 
-        $nikRules = $biodataExists ? 'required|string|max:18' : 'required|string|max:18|unique:biodata,nik';
+        $nikRules = $biodataExists ? 'required|string|min:16|max:16' : 'required|string|min:16|max:16|unique:biodata,nik';
         $noTelpRules = $biodataExists ? 'required|string|max:15' : 'required|string|max:15|unique:biodata,no_telp';
 
         $request->validate([
             // Validasi biodata
             'nik'            => $nikRules,
-            'nba'            => 'nullable|string|max:18',
+            'nba'            => 'nullable|string',
             'nama'           => 'required|string|max:50',
             'email'          => 'nullable|email|max:60',
             'no_telp'        => $noTelpRules,
@@ -119,8 +119,8 @@ class AnggotaDaerahController extends Controller
 
         $request->validate([
             // Validasi biodata
-            'nik'           => 'required|string|max:18|unique:biodata,nik,' . $anggotaDaerah->biodata_id,
-            'nba'           => 'nullable|string|max:18',
+            'nik'           => 'required|string|min:16|max:16|unique:biodata,nik,' . $anggotaDaerah->biodata_id,
+            'nba'           => 'nullable|string',
             'nama'          => 'required|string|max:50',
             'email'         => 'nullable|email|max:60',
             'no_telp'       => 'required|string|max:15|unique:biodata,no_telp,' . $anggotaDaerah->biodata_id,

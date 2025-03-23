@@ -10,7 +10,7 @@ class BiodataController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'nik'           => 'required|string|size:18|unique:biodata,nik',
+            'nik'           => 'required|string|min:16|max:16|unique:biodata,nik',
             'nba'           => 'nullable|string|max:18',
             'nama'          => 'required|string|max:50',
             'email'         => 'nullable|email|max:60',
