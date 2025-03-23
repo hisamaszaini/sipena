@@ -236,7 +236,7 @@ class AnggotaRantingController extends Controller
             $rantingIds = Ranting::where('cabang_id', $user->cabang_id)->pluck('id')->toArray();
             $query->whereIn('ranting_id', $rantingIds);
             $data = $query->get();
-            return Excel::download(new AnggotaRantingExport($data), "anggotaranting-$user->ranting_id.xlsx");
+            return Excel::download(new AnggotaRantingExport($data), "anggotaranting_cabang_$user->cabang_id.xlsx");
         } else {
             $data = $query->get();
 

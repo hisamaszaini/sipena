@@ -107,6 +107,14 @@ class RantingController extends Controller
 
     public function export()
     {
-        return Excel::download(new RantingExport, 'ranting.xlsx');
+        $user = Auth::user();
+        $query = Ranting::with('desa.kecamatan');
+        if($user->role == "operator"){
+            $query = $query->where('cabang_id', $user->cabang_id);
+            $data = $query->get();
+            return Excel::download(new RantingExport($data), "ranting_cabang_$user->cabang_id.xlsx");
+        }
+        $data = $query->get();
+        return Excel::download(new RantingExport($data), 'ranting.xlsx');
     }
 }

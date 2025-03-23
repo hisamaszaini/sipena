@@ -12,9 +12,16 @@ class RantingExport implements FromCollection, WithHeadings, WithMapping
     /**
      * @return \Illuminate\Support\Collection
      */
+    protected $data;
+
+    public function __construct($data)
+    {
+        $this->data = $data;
+    }
+
     public function collection()
     {
-        return Ranting::with('desa.kecamatan')->get();
+        return $this->data;
     }
 
     public function headings(): array
