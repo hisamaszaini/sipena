@@ -105,7 +105,7 @@ class AnggotaRantingController extends Controller
             ]);
 
             if ($user->role === 'operator') {
-                $biodataData['created_by'] = $user->id();
+                $biodataData['created_by'] = $user->id;
             }
 
             $biodata = Biodata::firstOrCreate(['nik' => $biodataData['nik']], $biodataData);

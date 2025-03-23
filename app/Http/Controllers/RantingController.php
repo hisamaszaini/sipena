@@ -56,10 +56,6 @@ class RantingController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->role !== 'admin') {
-            return response()->json(['error' => 'Anda tidak memiliki izin untuk menambahkan cabang'], 403);
-        }
-
         $request->validate([
             'nama' => 'required|string|unique:ranting,nama',
             'nomor_sk' => 'required|string|unique:ranting,nomor_sk',
