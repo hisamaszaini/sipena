@@ -60,7 +60,7 @@ Route::prefix('operator')->middleware(['auth', 'check.role:admin'])->group(funct
     Route::get('/export', [OperatorController::class, 'export'])->name('operator.export');
 });
 
-Route::prefix('kecamatan')->middleware(['auth', 'check.role:admin'])->group(function () {
+Route::prefix('kecamatan')->middleware(['auth'])->group(function () {
     Route::get('/', [KecamatanController::class, 'index'])->name('kecamatan.index');
     Route::post('/store', [KecamatanController::class, 'store'])->name('kecamatan.store');
     Route::get('/edit/{id}', [KecamatanController::class, 'edit'])->name('kecamatan.edit');
@@ -69,7 +69,7 @@ Route::prefix('kecamatan')->middleware(['auth', 'check.role:admin'])->group(func
     Route::get('/export', [KecamatanController::class, 'export'])->name('kecamatan.export');
 });
 
-Route::prefix('desa')->middleware(['auth', 'check.role:admin'])->group(function () {
+Route::prefix('desa')->middleware(['auth'])->group(function () {
     Route::get('/', [DesaController::class, 'index'])->name('desa.index');
     Route::post('/store', [DesaController::class, 'store'])->name('desa.store');
     Route::get('/edit/{id}', [DesaController::class, 'edit'])->name('desa.edit');
@@ -129,7 +129,9 @@ Route::prefix('anggotaranting')->middleware(['auth'])->group(function () {
     Route::get('/export', [AnggotaRantingController::class, 'export'])->name('anggotaranting.export');
 });
 
-Route::get('/biodata-autocomplete', [BiodataController::class, 'autocomplete'])->name('biodata.autocomplete');
-Route::get('/demografi-chart', [DashboardController::class, 'chartData'])->name('chartData');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/biodata-autocomplete', [BiodataController::class, 'autocomplete'])->name('biodata.autocomplete');
+    Route::get('/demografi-chart', [DashboardController::class, 'chartData'])->name('chartData');
+});
 
 require __DIR__.'/auth.php';
