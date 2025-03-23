@@ -60,6 +60,14 @@ class ProfileController extends Controller
     //     return Redirect::to('/');
     // }
 
+    public function index(Request $request){
+        $user = Auth::user();
+        $data = [
+            'title' => 'Edit Profile',
+        ];
+        return view(($user->role == "admin" ? 'pages.admin.profile' : 'pages.operator.profile'), $data);
+    }
+
     public function updateProfile(Request $request)
     {
         $messages = [

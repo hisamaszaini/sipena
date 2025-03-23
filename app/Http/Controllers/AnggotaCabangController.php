@@ -17,23 +17,24 @@ use Yajra\DataTables\Facades\DataTables;
 
 class AnggotaCabangController extends Controller
 {
-    /**
-     * Tampilkan semua anggota cabang beserta biodatanya.
-     */
     public function index(Request $request)
     {
-        // Data tambahan untuk form filter/modals
+
+        $user = Auth::user();
+
         $cabang = Cabang::all();
         $kecamatan = Kecamatan::all();
 
         if ($request->ajax()) {
             $query = AnggotaCabang::with('biodata', 'cabang');
 
-            // Jika Anda ingin menambahkan filter tertentu, misalnya berdasarkan cabang atau atribut biodata,
-            // tambahkan kondisi di sini. Contoh:
-            // if ($request->has('cabang_id') && !empty($request->cabang_id)) {
-            //     $query->where('cabang_id', $request->cabang_id);
-            // }
+            if ($request->has('cabang_id') && !empty($request->cabang_id)) {
+                $query->where('cabang_id', $request->cabang_id);
+            }
+            
+            if($user->role == "operator"){
+                $query->where('cabang_id', $user->cabang_id);
+            }
 
             return DataTables::of($query)->make(true);
         }
@@ -41,16 +42,12 @@ class AnggotaCabangController extends Controller
         $data = [
             'title' => 'Kelola Data Anggota Cabang',
             'cabang' => $cabang,
-            'kecamatan' => $kecamatan, // jika biodata perlu di-filter berdasar kecamatan pada modal
+            'kecamatan' => $kecamatan,
         ];
 
-        return view('pages.admin.anggotacabang', $data);
+        return view(($user->role == "admin" ? 'pages.admin.anggotacabang' : 'pages.operator.anggotacabang'), $data);
     }
 
-
-    /**
-     * Simpan data anggota cabang beserta biodatanya.
-     */
     public function store(Request $request)
     {
         $biodataExists = Biodata::where('nik', $request->nik)->exists();
@@ -100,7 +97,6 @@ class AnggotaCabangController extends Controller
                 'alamat_asal'
             ]);
 
-            // Jika biodata dengan NIK yang sama sudah ada, ambil datanya; jika tidak, buat baru.
             $biodata = Biodata::firstOrCreate(['nik' => $biodataData['nik']], $biodataData);
 
             $anggotaData = $request->only(['cabang_id', 'jabatan', 'status']);
@@ -122,23 +118,16 @@ class AnggotaCabangController extends Controller
         }
     }
 
-    /**
-     * Tampilkan detail anggota cabang beserta biodatanya.
-     */
     public function edit($id)
     {
         $anggotaCabang = AnggotaCabang::with('biodata', 'cabang')->findOrFail($id);
         return response()->json($anggotaCabang);
     }
 
-    /**
-     * Perbarui data anggota cabang dan biodata terkait.
-     */
     public function update(Request $request, $id)
     {
         $anggotaCabang = AnggotaCabang::findOrFail($id);
 
-        // Validasi data update dengan pengecualian biodata (nik dan no_telp) milik record saat ini
         $request->validate([
             // Validasi biodata
             'nik'           => 'required|string|max:18|unique:biodata,nik,' . $anggotaCabang->biodata_id,
@@ -183,7 +172,6 @@ class AnggotaCabangController extends Controller
             ]);
             $anggotaCabang->biodata()->update($biodataData);
 
-            // Update data anggota cabang
             $anggotaData = $request->only(['cabang_id', 'jabatan', 'status']);
             $anggotaCabang->update($anggotaData);
 
@@ -201,10 +189,6 @@ class AnggotaCabangController extends Controller
         }
     }
 
-    /**
-     * Hapus data anggota cabang. Jika biodata tidak berelasi dengan tabel
-     * anggota_cabang, anggota_daerah, dan anggota_ranting, maka hapus juga biodatanya.
-     */
     public function destroy($id)
     {
         DB::beginTransaction();
@@ -212,10 +196,8 @@ class AnggotaCabangController extends Controller
             $anggotaCabang = AnggotaCabang::findOrFail($id);
             $biodataId = $anggotaCabang->biodata_id;
 
-            // Hapus data anggota cabang
             $anggotaCabang->delete();
 
-            // Periksa relasi biodata pada tabel anggota_cabang, anggota_daerah, dan anggota_ranting
             $countAnggotaCabang = AnggotaCabang::where('biodata_id', $biodataId)->count();
             $countAnggotaDaerah = AnggotaDaerah::where('biodata_id', $biodataId)->count();
             $countAnggotaRanting = AnggotaRanting::where('biodata_id', $biodataId)->count();
@@ -242,7 +224,7 @@ class AnggotaCabangController extends Controller
         $user = Auth::user();
         $query = AnggotaCabang::with(['cabang', 'biodata']);
 
-        if ($user->role !== 'admin') {
+        if ($user->role == 'operator') {
             $query->where('cabang_id', $user->cabang_id);
             $data = $query->get();
             return Excel::download(new AnggotaCabangExport($data), "anggotacabang-$user->cabang_id.xlsx");

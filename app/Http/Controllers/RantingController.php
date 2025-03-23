@@ -8,6 +8,7 @@ use App\Models\Desa;
 use App\Models\Kecamatan;
 use App\Models\Cabang;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -15,31 +16,50 @@ class RantingController extends Controller
 {
     public function index(Request $request)
     {
+        $user = Auth::user();
+
         if ($request->ajax()) {
             $query = Ranting::with(['desa:id,nama,kecamatan_id', 'cabang:id,nama']);
-    
+
             $desaIds = [];
 
             if ($request->filled('kecamatan_id')) {
                 $desaIds = Desa::where('kecamatan_id', $request->kecamatan_id)->pluck('id')->toArray();
                 $query->whereIn('desa_id', $desaIds);
             }
-    
+
+            if ($user->role == "operator") {
+                $query->where('cabang_id', $user->cabang_id);
+            }
+
             return DataTables::eloquent($query)->make(true);
         }
-    
-        $data = [
-            'title' => 'Kelola Data Ranting',
-            'kecamatan' => Kecamatan::select('id', 'nama')->get(),
-            'desa' => Desa::select('id', 'nama')->get(),
-            'cabang' => Cabang::select('id', 'nama')->get(),
-        ];
-    
-        return view('pages.admin.ranting', $data);
+
+        if ($user->role == "admin") {
+            $data = [
+                'title' => 'Kelola Data Ranting',
+                'kecamatan' => Kecamatan::select('id', 'nama')->get(),
+                'desa' => Desa::select('id', 'nama')->get(),
+                'cabang' => Cabang::select('id', 'nama')->get(),
+            ];
+        } else {
+            $data = [
+                'title' => 'Kelola Data Ranting',
+                'desa' => Desa::select('id', 'nama')->where('kecamatan_id', $user->cabang->kecamatan_id)->get(),
+                'user' => $user,
+            ];
+        }
+        return view(($user->role == 'admin' ? 'pages.admin.ranting' : 'pages.operator.ranting'), $data);
     }
 
     public function store(Request $request)
     {
+        $user = Auth::user();
+
+        if ($user->role !== 'admin') {
+            return response()->json(['error' => 'Anda tidak memiliki izin untuk menambahkan cabang'], 403);
+        }
+
         $request->validate([
             'nama' => 'required|string|unique:ranting,nama',
             'nomor_sk' => 'required|string|unique:ranting,nomor_sk',

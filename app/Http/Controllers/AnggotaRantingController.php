@@ -18,40 +18,42 @@ use Yajra\DataTables\Facades\DataTables;
 
 class AnggotaRantingController extends Controller
 {
-    /**
-     * Tampilkan semua anggota ranting beserta biodatanya.
-     */
     public function index(Request $request)
     {
-        // Data tambahan untuk form filter/modals
-        $ranting = Ranting::all();
-        $kecamatan = Kecamatan::all();
-
+        $user = Auth::user();
         if ($request->ajax()) {
             $query = AnggotaRanting::with('biodata', 'ranting');
 
-            // Jika Anda ingin menambahkan filter tertentu, misalnya berdasarkan cabang atau atribut biodata,
-            // tambahkan kondisi di sini. Contoh:
-            // if ($request->has('cabang_id') && !empty($request->cabang_id)) {
-            //     $query->where('cabang_id', $request->cabang_id);
-            // }
+            if ($request->has('cabang_id') && !empty($request->cabang_id)) {
+                $query->where('cabang_id', $request->cabang_id);
+            }
+
+            if($user->role == "operator"){
+                $rantingIds = [];
+                $rantingIds = Ranting::where('cabang_id', $user->cabang_id)->pluck('id')->toArray();
+                $query->whereIn('ranting_id', $rantingIds);
+            }
 
             return DataTables::of($query)->make(true);
+        }
+
+        $kecamatan = Kecamatan::all();
+        if($user->role == "admin"){
+            $ranting = Ranting::all();
+        } else {
+            $ranting = Ranting::where('cabang_id', $user->cabang_id)->get();
         }
 
         $data = [
             'title' => 'Kelola Data Anggota Ranting',
             'ranting' => $ranting,
-            'kecamatan' => $kecamatan, // jika biodata perlu di-filter berdasar kecamatan pada modal
+            'kecamatan' => $kecamatan,
         ];
 
-        return view('pages.admin.anggotaranting', $data);
+        return view(($user->role == "admin" ? 'pages.admin.anggotaranting' : 'pages.operator.anggotaranting'), $data);
+
     }
 
-
-    /**
-     * Simpan data anggota ranting beserta biodatanya.
-     */
     public function store(Request $request)
     {
         $biodataExists = Biodata::where('nik', $request->nik)->exists();
@@ -101,7 +103,6 @@ class AnggotaRantingController extends Controller
                 'alamat_asal'
             ]);
 
-            // Jika biodata dengan NIK yang sama sudah ada, ambil datanya; jika tidak, buat baru.
             $biodata = Biodata::firstOrCreate(['nik' => $biodataData['nik']], $biodataData);
 
             $anggotaData = $request->only(['ranting_id', 'jabatan', 'status']);
@@ -123,23 +124,16 @@ class AnggotaRantingController extends Controller
         }
     }
 
-    /**
-     * Tampilkan detail anggota ranting beserta biodatanya.
-     */
     public function edit($id)
     {
         $anggotaRanting = AnggotaRanting::with('biodata', 'ranting')->findOrFail($id);
         return response()->json($anggotaRanting);
     }
 
-    /**
-     * Perbarui data anggota ranting dan biodata terkait.
-     */
     public function update(Request $request, $id)
     {
         $anggotaRanting = AnggotaRanting::findOrFail($id);
 
-        // Validasi data update dengan pengecualian biodata (nik dan no_telp) milik record saat ini
         $request->validate([
             // Validasi biodata
             'nik'           => 'required|string|max:18|unique:biodata,nik,' . $anggotaRanting->biodata_id,
@@ -202,10 +196,6 @@ class AnggotaRantingController extends Controller
         }
     }
 
-    /**
-     * Hapus data anggota ranting. Jika biodata tidak berelasi dengan tabel
-     * anggota_cabang, anggota_daerah, dan anggota_ranting, maka hapus juga biodatanya.
-     */
     public function destroy($id)
     {
         DB::beginTransaction();
@@ -213,7 +203,6 @@ class AnggotaRantingController extends Controller
             $anggotaRanting = AnggotaRanting::findOrFail($id);
             $biodataId = $anggotaRanting->biodata_id;
 
-            // Hapus data anggota cabang
             $anggotaRanting->delete();
 
             $countAnggotaCabang = AnggotaCabang::where('biodata_id', $biodataId)->count();
@@ -242,8 +231,10 @@ class AnggotaRantingController extends Controller
         $user = Auth::user();
         $query = AnggotaRanting::with(['ranting', 'biodata']);
 
-        if ($user->role !== 'admin') {
-            $query->where('ranting_id', $user->ranting_id);
+        if ($user->role == 'operator') {
+            $rantingIds = [];
+            $rantingIds = Ranting::where('cabang_id', $user->cabang_id)->pluck('id')->toArray();
+            $query->whereIn('ranting_id', $rantingIds);
             $data = $query->get();
             return Excel::download(new AnggotaRantingExport($data), "anggotaranting-$user->ranting_id.xlsx");
         } else {

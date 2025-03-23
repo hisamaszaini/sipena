@@ -18,7 +18,6 @@ class DesaController extends Controller
         if ($request->ajax()) {
             $query = Desa::with('kecamatan');
 
-            // Filter berdasarkan kecamatan_id
             if ($request->has('kecamatan_id') && !empty($request->kecamatan_id)) {
                 $query->where('kecamatan_id', $request->kecamatan_id);
             }

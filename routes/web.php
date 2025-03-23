@@ -33,10 +33,10 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/profile', function () {
-        return view('profile.edit', ['title' => 'Edit Profile']);
-    })->name('profile.edit');
-
+    // Route::get('/profile', function () {
+    //     return view('profile.edit', ['title' => 'Edit Profile']);
+    // })->name('profile.edit');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.edit');
     Route::put('/profile/update', [ProfileController::class, 'updateProfile'])->name('profile.update');
     Route::put('/password/update', [ProfileController::class, 'updatePassword'])->name('password.update');
 });
@@ -60,7 +60,7 @@ Route::prefix('operator')->middleware(['auth', 'check.role:admin'])->group(funct
     Route::get('/export', [OperatorController::class, 'export'])->name('operator.export');
 });
 
-Route::prefix('kecamatan')->middleware(['auth'])->group(function () {
+Route::prefix('kecamatan')->middleware(['auth', 'check.role:admin'])->group(function () {
     Route::get('/', [KecamatanController::class, 'index'])->name('kecamatan.index');
     Route::post('/store', [KecamatanController::class, 'store'])->name('kecamatan.store');
     Route::get('/edit/{id}', [KecamatanController::class, 'edit'])->name('kecamatan.edit');
@@ -69,7 +69,7 @@ Route::prefix('kecamatan')->middleware(['auth'])->group(function () {
     Route::get('/export', [KecamatanController::class, 'export'])->name('kecamatan.export');
 });
 
-Route::prefix('desa')->middleware(['auth'])->group(function () {
+Route::prefix('desa')->middleware(['auth', 'check.role:admin'])->group(function () {
     Route::get('/', [DesaController::class, 'index'])->name('desa.index');
     Route::post('/store', [DesaController::class, 'store'])->name('desa.store');
     Route::get('/edit/{id}', [DesaController::class, 'edit'])->name('desa.edit');

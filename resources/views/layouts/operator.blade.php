@@ -102,27 +102,6 @@
             </nav>
             <div class="px-4 py-2 text-xs font-medium text-white uppercase mt-1">Mastering Data</div>
             <div class="mt-2">
-                <div x-data="{ open: false }">
-                    <div @click="open = !open; $nextTick(() => { $refs.submenu.style.maxHeight = open ? $refs.submenu.scrollHeight + 'px' : '0px' })"
-                        class="flex items-center px-4 py-2 hover:bg-gray-700 transition duration-200 ease-in-out cursor-pointer">
-                        <i class="fas fa-globe mr-3 text-red-500 hover:text-red-300 w-[20px]"></i>
-                        <span class="font-medium">Data Wilayah</span>
-                        <i class="fas fa-chevron-down ml-auto dropdown-icon"
-                            :class="{'transform rotate-180': open}"></i>
-                    </div>
-                    <div x-ref="submenu" class="dropdown-content bg-gray-800">
-                        <a href="{{ route('kecamatan.index') }}"
-                            class="flex items-center pl-10 py-2 hover:bg-gray-700 transition duration-200 ease-in-out">
-                            <i class="fas fa-building mr-3 text-green-500 hover:text-green-300 w-[20px]"></i>
-                            <span class="font-medium">Data Kecamatan</span>
-                        </a>
-                        <a href="{{ route('desa.index') }}"
-                            class="flex items-center pl-10 py-2 hover:bg-gray-700 transition duration-200 ease-in-out">
-                            <i class="fas fa-building mr-3 text-green-500 hover:text-green-300 w-[20px]"></i>
-                            <span class="font-medium">Data Desa</span>
-                        </a>
-                    </div>
-                </div>
                 <a href="{{ route('cabang.index') }}" class="flex items-center px-4 py-2 hover:bg-gray-700 transition duration-200 ease-in-out">
                     <i class="fas fa-building mr-3 text-green-500 hover:text-green-300 w-[20px]"></i>
                     <span class="font-medium">Data Cabang</span>

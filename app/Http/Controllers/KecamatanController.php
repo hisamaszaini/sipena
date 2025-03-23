@@ -18,7 +18,6 @@ class KecamatanController extends Controller
         if ($request->ajax()) {
             $query = Kecamatan::with('kabupaten');
 
-            // Filter berdasarkan kabupaten_id
             if ($request->has('kabupaten_id') && !empty($request->kabupaten_id)) {
                 $query->where('kabupaten_id', $request->kabupaten_id);
             }
