@@ -10,7 +10,7 @@
             <h2 class="text-lg font-semibold text-white">Daftar Admin</h2>
             <div>
                 <button id="openAddModal" class="py-1 px-2 bg-green-600 text-white rounded-md hover:bg-green-700"><i class="fas fa-plus"></i></button>
-                <a href="{{ route('admin.export') }}" class="py-1 px-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"><i class="fas fa-file-excel"></i></a>
+                <a href="{{ route('admin.export') }}" class="py-1 px-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 inline-block"><i class="fas fa-file-excel h-[16px] w-[14px]"></i></a>
             </div>
         </div>
         <div class="mb-3">
