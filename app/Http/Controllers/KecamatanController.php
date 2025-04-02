@@ -32,7 +32,7 @@ class KecamatanController extends Controller
             'kabupaten' => $kabupaten,
         ];
 
-        return view($user == "admin" ? 'pages.admin.kecamatan' : 'pages.operator.kecamatan', $data);
+        return view($user->role == "admin" ? 'pages.admin.kecamatan' : 'pages.operator.kecamatan', $data);
     }
 
     public function store(Request $request)

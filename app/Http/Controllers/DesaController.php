@@ -32,7 +32,7 @@ class DesaController extends Controller
             'kecamatan' => $kecamatan,
         ];
 
-        return view($user == "admin" ? 'pages.admin.desa' : 'pages.operator.desa', $data);
+        return view($user->role == "admin" ? 'pages.admin.desa' : 'pages.operator.desa', $data);
     }
 
     public function store(Request $request)
