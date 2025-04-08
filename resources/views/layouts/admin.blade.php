@@ -104,17 +104,17 @@
             <div class="mt-2">
                 <div x-data="{ open: false }">
                     <div @click="open = !open; $nextTick(() => { $refs.submenu.style.maxHeight = open ? $refs.submenu.scrollHeight + 'px' : '0px' })" class="flex items-center px-4 py-2 hover:bg-gray-700 transition duration-200 ease-in-out cursor-pointer">
-                        <i class="fas fa-users mr-3 text-red-500 hover:text-red-300 w-[20px]"></i>
+                        <i class="fas fa-user-shield mr-3 text-purple-600 hover:text-red-300 w-[20px]"></i>
                         <span class="font-medium">Kelola Pengguna</span>
                         <i class="fas fa-chevron-down ml-auto dropdown-icon" :class="{'transform rotate-180': open}"></i>
                     </div>
                     <div x-ref="submenu" class="dropdown-content bg-gray-800" style="max-height: 0px;">
                         <a href="{{ route('admin.index') }}" class="flex items-center pl-10 py-2 hover:bg-gray-700 transition duration-200 ease-in-out">
-                            <i class="fas fa-user-tie mr-3 text-blue-500 hover:text-blue-300 w-[20px]"></i>
+                            <i class="fas fa-user-tie mr-3 text-blue-400 hover:text-blue-300 w-[20px]"></i>
                             <span class="font-medium">Data Admin</span>
                         </a>
                         <a href="{{ route('operator.index') }}" class="flex items-center pl-10 py-2 hover:bg-gray-700 transition duration-200 ease-in-out">
-                            <i class="fas fa-user-cog mr-3 text-blue-500 hover:text-blue-300 w-[20px]"></i>
+                            <i class="fas fa-user-cog mr-3 text-teal-500 hover:text-blue-300 w-[20px]"></i>
                             <span class="font-medium">Data Operator</span>
                         </a>
                     </div>
@@ -122,7 +122,7 @@
                 <div x-data="{ open: false }">
                     <div @click="open = !open; $nextTick(() => { $refs.submenu.style.maxHeight = open ? $refs.submenu.scrollHeight + 'px' : '0px' })"
                         class="flex items-center px-4 py-2 hover:bg-gray-700 transition duration-200 ease-in-out cursor-pointer">
-                        <i class="fas fa-globe mr-3 text-red-500 hover:text-red-300 w-[20px]"></i>
+                        <i class="fas fa-map mr-3 text-green-600 hover:text-red-300 w-[20px]"></i>
                         <span class="font-medium">Data Wilayah</span>
                         <i class="fas fa-chevron-down ml-auto dropdown-icon"
                             :class="{'transform rotate-180': open}"></i>
@@ -130,12 +130,12 @@
                     <div x-ref="submenu" class="dropdown-content bg-gray-800">
                         <a href="{{ route('kecamatan.index') }}"
                             class="flex items-center pl-10 py-2 hover:bg-gray-700 transition duration-200 ease-in-out">
-                            <i class="fas fa-building mr-3 text-green-500 hover:text-green-300 w-[20px]"></i>
+                            <i class="fas fa-landmark mr-3 text-green-500 hover:text-green-300 w-[20px]"></i>
                             <span class="font-medium">Data Kecamatan</span>
                         </a>
                         <a href="{{ route('desa.index') }}"
                             class="flex items-center pl-10 py-2 hover:bg-gray-700 transition duration-200 ease-in-out">
-                            <i class="fas fa-building mr-3 text-green-500 hover:text-green-300 w-[20px]"></i>
+                            <i class="fas fa-home mr-3 text-green-500 hover:text-green-300 w-[20px]"></i>
                             <span class="font-medium">Data Desa</span>
                         </a>
                     </div>
@@ -145,31 +145,31 @@
                     <span class="font-medium">Data Daerah</span>
                 </a>
                 <a href="{{ route('cabang.index') }}" class="flex items-center px-4 py-2 hover:bg-gray-700 transition duration-200 ease-in-out">
-                    <i class="fas fa-building mr-3 text-green-500 hover:text-green-300 w-[20px]"></i>
+                    <i class="fas fa-code-branch mr-3 text-green-500 hover:text-green-300 w-[20px]"></i>
                     <span class="font-medium">Data Cabang</span>
                 </a>
                 <a href="{{ route('ranting.index') }}" class="flex items-center px-4 py-2 hover:bg-gray-700 transition duration-200 ease-in-out">
-                    <i class="fas fa-sitemap mr-3 text-yellow-500 hover:text-yellow-300 w-[20px]"></i>
+                    <i class="fas fa-tree mr-3 text-yellow-500 hover:text-yellow-300 w-[20px]"></i>
                     <span class="font-medium">Data Ranting</span>
                 </a>
                 <div x-data="{ open: false }">
                     <div @click="open = !open; $nextTick(() => { $refs.submenu.style.maxHeight = open ? $refs.submenu.scrollHeight + 'px' : '0px' })"
                         class="flex items-center px-4 py-2 hover:bg-gray-700 transition duration-200 ease-in-out cursor-pointer">
-                        <i class="fas fa-user-friends mr-3 text-red-500 hover:text-red-300 w-[20px]"></i>
+                        <i class="fas fa-users mr-3 text-red-500 hover:text-red-300 w-[20px]"></i>
                         <span class="font-medium">Data Anggota</span>
                         <i class="fas fa-chevron-down ml-auto dropdown-icon" :class="{'transform rotate-180': open}"></i>
                     </div>
                     <div x-ref="submenu" class="dropdown-content bg-gray-800">
                         <a href="{{ route('anggotadaerah.index') }}" class="flex items-center pl-10 py-2 hover:bg-gray-700 transition duration-200 ease-in-out">
-                            <i class="fas fa-map-marked-alt mr-3 text-purple-500 hover:text-purple-300 w-[20px]"></i>
+                            <i class="fas fa-user-friends mr-3 text-purple-500 hover:text-purple-300 w-[20px]"></i>
                             <span class="font-medium">Anggota Daerah</span>
                         </a>
                         <a href="{{ route('anggotacabang.index') }}" class="flex items-center pl-10 py-2 hover:bg-gray-700 transition duration-200 ease-in-out">
-                            <i class="fas fa-city mr-3 text-blue-400 hover:text-blue-200 w-[20px]"></i>
+                            <i class="fas fa-user-check mr-3 text-blue-400 hover:text-blue-200 w-[20px]"></i>
                             <span class="font-medium">Anggota Cabang</span>
                         </a>
                         <a href="{{ route('anggotaranting.index') }}" class="flex items-center pl-10 py-2 hover:bg-gray-700 transition duration-200 ease-in-out">
-                            <i class="fas fa-seedling mr-3 text-green-400 hover:text-green-200 w-[20px]"></i>
+                            <i class="fas fa-user-graduate mr-3 text-green-400 hover:text-green-200 w-[20px]"></i>
                             <span class="font-medium">Anggota Ranting</span>
                         </a>
                     </div>
@@ -178,7 +178,7 @@
             <div class="px-4 py-2 text-xs font-medium text-white uppercase mt-1">Akun</div>
             <div class="mt-2">
                 <a href="{{ route('profile.edit') }}" class="flex items-center px-4 py-2 hover:bg-gray-700 transition duration-200 ease-in-out">
-                    <i class="fas fa-user-cog mr-3 text-blue-500 hover:text-blue-300 w-[20px]"></i>
+                    <i class="fas fa-cog mr-3 text-blue-500 hover:text-blue-300 w-[20px]"></i>
                     <span class="font-medium">Pengaturan Akun</span>
                 </a>
                 <form method="POST" action="{{ route('logout') }}">
